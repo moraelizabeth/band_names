@@ -1,7 +1,7 @@
 class Band {
   String id;
   String name;
-  String votes;
+  int votes;
 
   Band({
     required this.id,
