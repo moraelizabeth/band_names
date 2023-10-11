@@ -1,10 +1,9 @@
-import 'dart:io';
-
 import 'package:band_names/models/band.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -36,17 +35,34 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 
-  ListTile _bandTile(Band band) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundColor: Colors.blue[100],
-        child: Text(band.name.substring(0, 2)),
-      ),
-      title: Text(band.name),
-      trailing: Text('${band.votes}', style: const TextStyle(fontSize: 20)),
-      onTap: () {
-        print(band.name);
+  Widget _bandTile(Band band) {
+    return Dismissible(
+      key: Key(band.id),
+      direction: DismissDirection.startToEnd,
+      onDismissed: (direction) {
+        debugPrint('direction: $direction');
       },
+      background: Container(
+        padding: const EdgeInsets.only(left: 8.0),
+        color: Colors.red,
+        child: const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Delete Band',
+              style: TextStyle(color: Colors.white),
+            )),
+      ),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: Colors.blue[100],
+          child: Text(band.name.substring(0, 2)),
+        ),
+        title: Text(band.name),
+        trailing: Text('${band.votes}', style: const TextStyle(fontSize: 20)),
+        onTap: () {
+          debugPrint(band.name);
+        },
+      ),
     );
   }
 
